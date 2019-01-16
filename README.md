@@ -26,11 +26,13 @@ sudo ./tinyftpd
 ```
 #### 修改文件后单独编译
 src目录下：
-```gcc -Wall -g -c ftpproto.c -o ftpproto.o
+```
+gcc -Wall -g -c ftpproto.c -o ftpproto.o
 mv ftpproto.o ../bin
 ```
 bin目录下：
-```gcc -Wall -g -std=c99 main.o commsocket.o sckutil.o session.o ftpproto.o privparent.o str.o tunable.o parseconf.o privsock.o hash.o -o tinyftpd -lcrypt
+```
+gcc -Wall -g -std=c99 main.o commsocket.o sckutil.o session.o ftpproto.o privparent.o str.o tunable.o parseconf.o privsock.o hash.o -o tinyftpd -lcrypt
 ```
 
 ### 配置
