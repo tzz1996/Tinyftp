@@ -928,12 +928,12 @@ static void  do_type(session_t *sess)
 {
 	if (strcmp(sess->arg, "A") == 0)
 	{
-		ftp_relply(sess, FTP_TYPEOK, "Swiching to ASCII mode");
+		ftp_relply(sess, FTP_TYPEOK, "Swiching to ASCII mode(tzz test message do_type)");
 	}
 	else if (strcmp(sess->arg, "I") == 0)
 	{
 		sess->is_ascii = 1;
-		ftp_relply(sess, FTP_TYPEOK, "Swiching to Binarry mode");
+		ftp_relply(sess, FTP_TYPEOK, "Swiching to Binarry mode(tzz test message do_type)");
 	}
 	else
 	{
@@ -1080,13 +1080,13 @@ static void  do_list(session_t *sess)
 		return;
 	}
 	//向客户端响应 150
-	ftp_relply(sess, FTP_DATACONN, "Here comes the directory listing");
+	ftp_relply(sess, FTP_DATACONN, "Here comes the directory listing(tzz test message do_list)");
 	//传输列表
 	list_common(sess, 1);
 	//关闭数据连接套接字
 	close(sess->data_fd);
 	//226
-	ftp_relply(sess, FTP_TRANSFEROK, "Directory send OK");
+	ftp_relply(sess, FTP_TRANSFEROK, "Directory send OK(tzz test message do_list)");
 }
 static void  do_nlst(session_t *sess)
 {
@@ -1096,13 +1096,13 @@ static void  do_nlst(session_t *sess)
 		return;
 	}
 	//向客户端响应 150
-	ftp_relply(sess, FTP_DATACONN, "Here comes the directory listing");
+	ftp_relply(sess, FTP_DATACONN, "Here comes the directory listing(tzz test message do_nlst)");
 	//传输列表
 	list_common(sess, 0);
 	//关闭数据连接套接字
 	close(sess->data_fd);
 	//226
-	ftp_relply(sess, FTP_TRANSFEROK, "Directory send OK");	
+	ftp_relply(sess, FTP_TRANSFEROK, "Directory send OK(tzz test message do_nlst)");	
 }
 
 static void  do_rest(session_t *sess)
