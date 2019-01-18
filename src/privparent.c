@@ -9,6 +9,8 @@ static void privop_pasv_get_data_sock(session_t *sess);
 static void privop_pasv_active(session_t *sess);
 static void privop_pasv_listen(session_t *sess);
 static void privop_pasv_accept(session_t *sess);
+//test for cwd
+static void parent_do_cwd(session_t *sess);
 
 int capset(cap_user_header_t hdrp, const cap_user_data_t datap);
 /*设置最小化特权*/
@@ -83,8 +85,17 @@ void handle_parent(session_t *sess)
 		case PRIV_SOCK_PASV_ACCETP:
 			privop_pasv_accept(sess);
 			break;
+		//test for cwd
+		case TEST_DO_CWD:
+			parent_do_cwd(sess);
+			break;
 		}
 	}
+}
+
+static void parent_do_cwd(session_t *sess) 
+{
+	printf("ftp user change pwd to %s\n", sess->arg);
 }
 
 static void privop_pasv_get_data_sock(session_t *sess)
@@ -116,7 +127,7 @@ static void privop_pasv_get_data_sock(session_t *sess)
 		return;
 	}
 	
-	printf("helloo\n");
+	printf("helloo(privparent.c/privop_pasv_get_data_sock)\n");
 	if (connect_timeout(data_sockfd, &addr, tunable_connect_timeout) < 0)
 	{
 		close(data_sockfd);
@@ -142,6 +153,7 @@ static void privop_pasv_active(session_t *sess)
 		active = 0;
 	}
 	
+	printf("log(privparent.c/privop_pasv_active)\n");
 	priv_sock_send_int(sess->parent_fd, active); 
 }
 static void privop_pasv_listen(session_t *sess)
@@ -161,6 +173,7 @@ static void privop_pasv_listen(session_t *sess)
 		ERR_EXIT("getsockname");
 	}
 	unsigned short port = ntohs(addr.sin_port);
+	printf("log(privparent.c/privop_pasv_listen)\n");
 	priv_sock_send_int(sess->parent_fd, port);
 }
 static void privop_pasv_accept(session_t *sess)
@@ -176,6 +189,7 @@ static void privop_pasv_accept(session_t *sess)
 		return;
 	}
 	
+	printf("log(privparent.c/privop_pasv_accept)\n");
 	priv_sock_send_result(sess->parent_fd, PRIV_SOCK_RESULT_OK);
 	priv_sock_send_fd(sess->parent_fd, connfd);
 	

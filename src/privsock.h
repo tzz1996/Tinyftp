@@ -8,6 +8,8 @@
 #define PRIV_SOCK_PASV_ACTIVE		2
 #define PRIV_SOCK_PASV_LISTEN		3
 #define PRIV_SOCK_PASV_ACCETP		4
+//test for cwd
+#define TEST_DO_CWD                 5
 
 /*nobody进程对FTP服务进程的应答*/
 #define PRIV_SOCK_RESULT_OK			1

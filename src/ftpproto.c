@@ -850,7 +850,9 @@ static void  do_cwd(session_t *sess)
 		return;
 	}	
 	
-	ftp_relply(sess, FTP_CWDOK,"Directory successfully changed.");
+	//test for cwd
+	priv_sock_send_cmd(sess->child_fd, TEST_DO_CWD);
+	ftp_relply(sess, FTP_CWDOK,"Directory successfully changed.log(ftpproto.c/do_cwd)");
 }
 static void  do_cdup(session_t *sess)
 {
@@ -861,7 +863,7 @@ static void  do_cdup(session_t *sess)
 		return;
 	}	
 	
-	ftp_relply(sess, FTP_CWDOK,"Directory successfully changed.");	
+	ftp_relply(sess, FTP_CWDOK,"Directory successfully changed.log(ftpproto.c/do_cdup)");	
 }
 static void  do_quit(session_t *sess)
 {
@@ -889,7 +891,7 @@ static void  do_port(session_t *sess)
 	p[2] = v[4];
 	p[3] = v[5];
 	
-	ftp_relply(sess, FTP_PORTOK, "PORT command successful. Consider using PASV");
+	ftp_relply(sess, FTP_PORTOK, "PORT command successful. Consider using PASV(tzz test message do_port)");
 	
 }
 static void  do_pasv(session_t *sess)
@@ -920,7 +922,7 @@ static void  do_pasv(session_t *sess)
 	sscanf(ip, "%u.%u.%u.%u", &v[0],&v[1],&v[2],&v[3]);
 	
 	char text[1024] = {0};
-	sprintf(text, "Entering Passive Mode (%u,%u,%u,%u,%u,%u).", v[0],v[1],v[2],v[3], port>>8, port&0xFF);
+	sprintf(text, "Entering Passive Mode (%u,%u,%u,%u,%u,%u).(tzz test message do_pasv)", v[0],v[1],v[2],v[3], port>>8, port&0xFF);
 	
 	ftp_relply(sess, FTP_PASVOK, text);
 }
@@ -928,12 +930,12 @@ static void  do_type(session_t *sess)
 {
 	if (strcmp(sess->arg, "A") == 0)
 	{
-		ftp_relply(sess, FTP_TYPEOK, "Swiching to ASCII mode(tzz test message do_type)");
+		ftp_relply(sess, FTP_TYPEOK, "Swiching to ASCII mode(tzz test message)");
 	}
 	else if (strcmp(sess->arg, "I") == 0)
 	{
 		sess->is_ascii = 1;
-		ftp_relply(sess, FTP_TYPEOK, "Swiching to Binarry mode(tzz test message do_type)");
+		ftp_relply(sess, FTP_TYPEOK, "Swiching to Binarry mode(tzz test message)");
 	}
 	else
 	{
@@ -1096,7 +1098,7 @@ static void  do_nlst(session_t *sess)
 		return;
 	}
 	//向客户端响应 150
-	ftp_relply(sess, FTP_DATACONN, "Here comes the directory listing(tzz test message do_nlst)");
+	ftp_relply(sess, FTP_DATACONN, "Here comes the directory listing (tzz test message do_nlst)");
 	//传输列表
 	list_common(sess, 0);
 	//关闭数据连接套接字
